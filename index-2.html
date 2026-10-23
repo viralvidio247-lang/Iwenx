@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KANAK SASAK</title>
+<meta name="theme-color" content="#0b0710"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--o:#ff5a00;--r:#e8174a;--c:#19d3f3;--b:#2f7bff;--ink:#1a1020;--mut:#7a6f85;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html{color-scheme:light}
+body{margin:0;font-family:Poppins,system-ui,sans-serif;background:#0b0710;color:#fff;min-height:100vh}
+.scr{display:none;max-width:480px;margin:0 auto;padding:18px 16px 40px}.scr.on{display:block}
+.hero{text-align:center;padding-top:36px}
+.badge{display:inline-block;font-size:9px;letter-spacing:2px;font-weight:700;padding:6px 14px;border-radius:99px;background:rgba(255,90,0,.25);border:1px solid #ff5a0088}
+h1{font-size:44px;line-height:1;margin:22px 0 14px;font-weight:800;font-style:italic;text-shadow:3px 3px 0 #000}
+h1 .g{background:linear-gradient(90deg,#ffb300,#ff5a00,#ffe14d,#19d3f3,#b04dff);-webkit-background-clip:text;background-clip:text;color:transparent;display:block}
+.hero p{font-size:12px;color:#c9bfd6;line-height:1.6;margin:0 8px 26px}
+.btn{border:0;border-radius:99px;font:800 12px Poppins,sans-serif;letter-spacing:.5px;color:#fff;padding:15px 22px;cursor:pointer;background:linear-gradient(180deg,#ff7a1a,#ff4d00);box-shadow:0 5px 0 #b33400,0 10px 24px #ff5a0066}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #b33400}
+.btn.red{background:linear-gradient(180deg,#ff3a55,#d3103f);box-shadow:0 5px 0 #8a0a29,0 10px 24px #e8174a55}
+.btn.cy{background:linear-gradient(180deg,#25e3ff,#2f7bff);box-shadow:0 4px 0 #1b4fb3;width:100%}
+.btn:disabled{opacity:.5}
+.card{background:#fff;color:var(--ink);border-radius:26px;padding:18px;margin-top:26px;box-shadow:0 14px 40px #0008}
+.card h2{font-size:22px;font-style:italic;margin:0 0 12px;font-weight:800}
+.gi{display:flex;gap:12px;align-items:center;border:1px solid #eee;border-radius:18px;padding:10px;margin-top:10px;cursor:pointer}
+.gi .th{width:54px;height:54px;border-radius:12px;background:linear-gradient(135deg,#ffb300,#ff5a00);display:grid;place-items:center;font-size:24px}
+.gi b{font-size:14px;font-style:italic;display:block}.gi small{font-size:9px;color:var(--mut)}
+.empty{font-size:11px;color:var(--mut);text-align:center;padding:10px}
+.form{background:#fff;color:var(--ink);border-radius:28px;padding:20px 18px;border-left:5px solid var(--o);border-right:5px solid #c32bff}
+.form h2{text-align:center;font-size:24px;font-style:italic;margin:4px 0 2px;font-weight:800}
+.form .sub{text-align:center;font-size:8px;letter-spacing:2px;color:var(--mut);margin-bottom:16px}
+label{display:block;font-size:10px;font-weight:800;color:#a85a00;letter-spacing:.6px;margin:14px 0 6px;text-transform:uppercase}
+select,textarea{width:100%;border:1.5px solid #e6e1ee;background:#f7f5fb;border-radius:14px;padding:13px 12px;font:600 12px Poppins,sans-serif;color:var(--ink)}
+select:focus,textarea:focus{outline:2px solid var(--o);background:#fff}
+textarea{min-height:96px;resize:vertical;font-weight:500}
+.seg{display:flex;gap:8px}.seg button{flex:1;border:0;border-radius:14px;padding:13px 4px;font:800 11px Poppins,sans-serif;background:#f7f5fb;color:#8d8499;cursor:pointer}
+.seg button.on{background:linear-gradient(180deg,#ff7a1a,#ff3a55);color:#fff;box-shadow:0 5px 12px #ff5a004d}
+.seg.cy button.on{background:linear-gradient(180deg,#25e3ff,#19b4f3);color:#04323d}
+.box{border:1.5px solid #e6e1ee;border-radius:22px;padding:14px;margin-top:16px}
+.bh{display:flex;justify-content:space-between;align-items:center;font-size:10px;font-weight:800;letter-spacing:.6px}
+.bh i{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#ff3a8a,#c32bff);margin-right:8px;font-style:normal}
+.bh i.c{background:linear-gradient(135deg,#25e3ff,#2f7bff)}
+.pill{border:1px solid #e6e1ee;background:#fff;border-radius:99px;padding:6px 10px;font:700 8px Poppins;cursor:pointer}
+.foot{display:flex;align-items:center;justify-content:space-between;margin-top:22px}
+.foot .x{background:none;border:0;font:800 10px Poppins;letter-spacing:2px;color:#9a91a6;cursor:pointer}
+.err{color:#d3103f;font-size:11px;font-weight:600;margin-top:10px;text-align:center}
+#load{text-align:center;padding-top:110px}
+.ring{width:150px;height:150px;border-radius:50%;margin:0 auto 34px;background:conic-gradient(#ff5a00,#e8174a,#c32bff,#19d3f3,#ff5a00);display:grid;place-items:center;animation:sp 2.4s linear infinite}
+.ring::after{content:"";width:132px;height:132px;border-radius:50%;background:#0b0710}
+@keyframes sp{to{transform:rotate(360deg)}}
+#load h3{font-size:26px;font-style:italic;margin:0;font-weight:800}
+#load h3 span{background:linear-gradient(90deg,#19d3f3,#c32bff,#ff5a00);-webkit-background-clip:text;background-clip:text;color:transparent}
+#load p{font-size:9px;letter-spacing:1.5px;color:#bdb2cc;margin:14px 20px}
+.bar{height:5px;border-radius:9px;background:#2a2133;margin:20px 30px 6px;overflow:hidden}.bar div{height:100%;width:3%;background:linear-gradient(90deg,#19d3f3,#c32bff,#ff5a00);transition:width .5s}
+.res h2{font-size:24px;font-style:italic;font-weight:800;margin:6px 0 2px}.res .meta{font-size:10px;color:#c9bfd6;margin-bottom:12px}
+.sc{background:#fff;color:var(--ink);border-radius:22px;padding:14px;margin-top:12px}
+.sc .t{display:inline-block;font-size:9px;font-weight:800;background:#ff5a00;color:#fff;border-radius:99px;padding:4px 10px}
+.sc h4{font-size:9px;letter-spacing:1px;color:#a85a00;margin:12px 0 4px}
+.sc p{margin:0;font-size:12px;line-height:1.55}
+.sc .cp{float:right;border:0;background:#f1edf8;border-radius:99px;padding:4px 10px;font:700 9px Poppins;cursor:pointer}
+.sub-b{display:inline-block;background:#7a1fff;color:#fff;font-weight:800;font-size:11px;padding:2px 8px;margin-top:4px}
+.tags{font-size:11px;color:#19d3f3;margin-top:6px}
+.row{display:flex;gap:8px;margin-top:16px}.row .btn{flex:1;padding:13px 8px;font-size:11px}
+.cc{border:1.5px dashed #e6e1ee;border-radius:18px;padding:12px;margin-top:12px}.cc input{width:100%;border:1.5px solid #e6e1ee;background:#f7f5fb;border-radius:12px;padding:11px;font:700 12px Poppins,sans-serif;margin-top:10px;color:var(--ink)}.cc textarea{min-height:76px;margin-top:8px;font-size:11px}.cc .pill{font-size:8px}.rf{background:#f7f5fb;border-radius:12px;padding:8px;margin-top:6px}
+</style></head><body>
+
+<section class="scr on" id="home">
+ <div class="hero">
+  <span class="badge">● CLAY ANIMATION ENGINE V1.0</span>
+  <h1>MAKE IT CLAY.<span class="g">KANAK SASAK</span></h1>
+  <p>ClayVerse AI mengotomatiskan seluruh proses kreatifmu: dari konsep, storyboard, hingga prompt video animasi clay berkualitas tinggi yang siap menggugah media sosial.</p>
+  <button class="btn" id="start">✎ MULAI BUAT KONTEN CLAY!</button>
+ </div>
+ <div class="card"><h2>GALERI CLAYVERSE</h2><div id="gal"></div></div>
+</section>
+
+<section class="scr" id="cfg">
+ <div class="form">
+  <h2>KONFIGURASI CERITA 🎨</h2><div class="sub">DESIGNING YOUR NEXT VIRAL CLAY ANIMATION.</div>
+  <label>⏱ Durasi Video</label><select id="dur"></select>
+  <label>🎞 Ratio Layar</label>
+  <div class="seg" id="ratio"><button class="on" data-v="9:16">9:16</button><button data-v="16:9">16:9</button></div>
+  <label>🎬 Durasi Tiap Adegan</label>
+  <div class="seg" id="sdur"><button data-v="5">5 DETIK</button><button class="on" data-v="8">8 DETIK</button><button data-v="10">10 DETIK</button></div>
+  <label>🎨 Pilih Tema Clay</label><select id="tema"></select>
+  <div class="box">
+   <div class="bh"><span><i>👥</i>KARAKTER STUDIO</span><button class="pill" id="rnd">🎲 ACAK KARAKTER</button></div>
+   <label>Jumlah Karakter</label>
+   <div class="seg" id="jml"><button class="on" data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button><button data-v="4">4</button></div>
+   <label>Jenis Karakter</label><select id="jenis"></select>
+   <div id="chars"></div><button class="btn cy" id="autoc" style="margin-top:12px">✨ BUAT SEMUA KARAKTER ✨</button>
+  </div>
+  <label>🎬 Ide Cerita ClayVerse</label>
+  <textarea id="ide" placeholder="Tuliskan alur ceritamu atau biarkan AI membantu..."></textarea>
+  <button class="btn cy" id="auto" style="margin-top:12px">✨ GENERATE CERITA OTOMATIS ✨</button>
+  <div class="box">
+   <div class="bh"><span><i class="c">🎧</i>AUDIO &amp; SUBTITLE STUDIO</span></div>
+   <label>Mode Audio</label>
+   <div class="seg cy" id="mode"><button class="on" data-v="Narasi">NARASI</button><button data-v="Dialog">DIALOG</button></div>
+   <label>Subtitle</label>
+   <div class="seg cy" id="sub"><button data-v="Tanpa Teks">TANPA TEKS</button><button class="on" data-v="Subtitle Dinamis">SUBTITLE DINAMIS</button></div>
+   <label>Bahasa Video</label><select id="bhs"></select>
+   <label>Gaya Bahasa</label><select id="gaya"></select>
+   <label>Suara Narator (bawaan perangkat)</label><select id="voice"></select>
+  </div>
+  <div class="err" id="err"></div>
+  <div class="foot"><button class="x" id="batal">BATAL</button><button class="btn red" id="go">CREATE CLAYVERSE PLAN ✏️</button></div>
+ </div>
+</section>
+
+<section class="scr" id="load">
+ <div class="ring"></div>
+ <h3>Studio Engine<br><span>SEDANG BERPIKIR</span></h3>
+ <p>MENGANALISIS OBJEK, MERANCANG TRANSISI AESTHETIC, DAN MENYUSUN BLUEPRINT VIDEO VIRAL.</p>
+ <div class="bar"><div id="pg"></div></div>
+ <p id="pt">● MENUNGGU GOOGLE... 0 dtk</p>
+ <button class="btn" id="cancel" style="margin-top:14px;padding:11px 22px">BATALKAN</button>
+</section>
+
+<section class="scr res" id="res"></section>
+
+<script>
+const $=s=>document.querySelector(s);
+const O={
+ dur:[10,20,30,40,50,60,70,80,90,100,110,120,130].map(n=>n+" Detik"),
+ tema:["😂 Komedi","👻 Horor","🐾 Dunia Hewan","📚 Edukasi","🧚 Fantasi","🧭 Petualangan","🤝 Persahabatan","🥹 Emosional / Mengharukan","🕵️ Misteri","💰 Heist / Pencurian"],
+ jenis:["👨 Manusia Dewasa","🧒 Anak-anak","👵 Lansia","🐶 Hewan Peliharaan","🦁 Hewan Liar","🐮 Hewan Ternak","🐉 Makhluk Fantasi","🤖 Robot","👽 Alien","👾 Monster Lucu","🦸 Superhero","🧙 Penyihir","🏴‍☠️ Bajak Laut","👨‍🚀 Astronaut","💼 Profesi Spesifik","🧑‍🤝‍🧑 Kombinasi Manusia + Hewan"],
+ bhs:["Bahasa Indonesia","Bahasa Inggris","Mandarin (China)","Japanese (Jepang)","Korean (Korea)","Bahasa Melayu (Malaysia)","Arabic (Arab)","Hindi (India)","Bahasa Jawa (Indonesia)","Bahasa Sunda (Indonesia)"],
+ gaya:["Santai — ringan, natural, seperti ngobrol sehari-hari.","Storytelling — mengalir seperti sedang menceritakan sebuah kisah.","Dramatis — emosional, tegang, dan membangun rasa penasaran.","Inspiratif — membangkitkan semangat dan motivasi.","Persuasif — meyakinkan dan mendorong audiens untuk bertindak.","Edukatif — informatif, jelas, dan mudah dipahami.","Provokatif — memancing rasa penasaran, reaksi, dan diskusi.","Emosional — menyentuh perasaan dan membangun koneksi."]
+};
+const fill=(id,a)=>$(id).innerHTML=a.map(x=>`<option>${x}</option>`).join("");
+fill("#dur",O.dur);fill("#tema",O.tema);fill("#jenis",O.jenis);fill("#bhs",O.bhs);fill("#gaya",O.gaya);
+$("#dur").value="30 Detik";
+document.querySelectorAll(".seg").forEach(s=>s.onclick=e=>{const b=e.target.closest("button");if(!b)return;s.querySelectorAll("button").forEach(x=>x.classList.remove("on"));b.classList.add("on")});
+const val=id=>$(id+" .on").dataset.v;
+function show(id){document.querySelectorAll(".scr").forEach(s=>s.classList.toggle("on",s.id===id));scrollTo(0,0)}
+function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+let mem=[];
+function loadG(){try{mem=JSON.parse(localStorage.getItem("kanaksasak")||"[]")}catch(e){}}
+function saveG(){try{localStorage.setItem("kanaksasak",JSON.stringify(mem))}catch(e){}}
+function gal(){$("#gal").innerHTML=mem.length?mem.map((m,i)=>`<div class="gi" data-i="${i}"><div class="th">🎨</div><div><b>${esc(m.title)}</b><small>${m.date} • ${m.scenes.length} ADEGAN</small></div></div>`).join(""):'<div class="empty">Belum ada karya. Mulai buat konten clay pertamamu!</div>'}
+$("#gal").onclick=e=>{const g=e.target.closest(".gi");if(g)render(mem[g.dataset.i])};
+$("#start").onclick=()=>show("cfg");$("#batal").onclick=()=>show("home");
+$("#rnd").onclick=()=>{$("#jenis").selectedIndex=Math.floor(Math.random()*O.jenis.length);$("#tema").selectedIndex=Math.floor(Math.random()*O.tema.length)};
+/* karakter */
+const NM=["Lalu Arya","Baiq Sari","Amaq Jaya","Inaq Ratna","Lalu Bayu","Baiq Dewi","Mamiq Agus","Lalu Rinjani"],HR=["short curly black hair","neat side-parted hair","a tiny top-knot","long braided hair","fluffy round hair"],OF=["a red and gold Sasak songket sarong","a blue batik shirt","green overalls","an orange hoodie","a white udeng headband and brown vest"],CL=["warm brown","peach","tan","caramel","light beige"],EY=["big round shiny eyes","wide friendly eyes","small curious eyes"];
+const mkLook=j=>`A cute clay (plasticine) ${j.replace(/^\S+\s/,"")} character, ${pick(CL)} clay skin, ${pick(EY)}, ${pick(HR)}, wearing ${pick(OF)}, chubby handmade proportions, visible fingerprint texture`;
+let CH=[];const nChar=()=>parseInt(val("#jml"));
+function drawChars(){const n=nChar();while(CH.length<4)CH.push({name:"",look:""});
+ $("#chars").innerHTML=CH.slice(0,n).map((x,i)=>`<div class="cc"><div class="bh"><span>KARAKTER ${i+1}</span><button class="pill" data-a="${i}">✨ BUAT OTOMATIS</button></div><input data-n="${i}" placeholder="Nama karakter (mis. Lalu Arya)" value="${esc(x.name)}"><textarea data-l="${i}" placeholder="Ciri fisik tetap: wajah, rambut, baju, warna, aksesori... (dipakai persis di semua adegan)">${esc(x.look)}</textarea></div>`).join("")}
+function autoChar(i,force){const used=CH.map(x=>x.name);if(force||!CH[i].name)CH[i].name=pick(NM.filter(n=>!used.includes(n))||NM)||pick(NM);if(force||!CH[i].look)CH[i].look=mkLook($("#jenis").value)}
+$("#chars").oninput=e=>{const t=e.target;if(t.dataset.n!=null)CH[t.dataset.n].name=t.value;if(t.dataset.l!=null)CH[t.dataset.l].look=t.value};
+$("#chars").onclick=e=>{const b=e.target.closest("button[data-a]");if(b){autoChar(+b.dataset.a,true);drawChars()}};
+$("#jml").addEventListener("click",drawChars);
+$("#autoc").onclick=()=>{for(let i=0;i<nChar();i++)autoChar(i,true);drawChars()};
+drawChars();
+const cfg=()=>({durasi:$("#dur").value,ratio:val("#ratio"),tema:$("#tema").value,jumlah:val("#jml"),jenis:$("#jenis").value,ide:$("#ide").value.trim(),audio:val("#mode"),subtitle:val("#sub"),bahasa:$("#bhs").value,gaya:$("#gaya").value,sd:parseInt(val("#sdur")),chars:CH.slice(0,nChar()).map(x=>({name:x.name.trim(),look:x.look.trim()}))});
+function fillChars(){for(let i=0;i<nChar();i++)autoChar(i,false);drawChars()}
+/* cerita otomatis (template, tanpa AI) */
+const PR={"Komedi":["Kekacauan Lucu","tanpa sengaja membuat kekacauan kecil di desa","kacau dan konyol","terpeleset sampai semua orang tertawa","kembali damai penuh tawa"],"Horor":["Suara di Malam Hari","mendengar suara aneh dari belakang rumah","menegangkan","memberanikan diri membuka pintu","ternyata hanya kejutan yang lucu"],"Dunia Hewan":["Sahabat Hutan","bertemu hewan kecil yang tersesat di hutan","seru","menolongnya menyeberangi sungai","bahagia dan hewan itu pulang ke keluarganya"],"Edukasi":["Belajar Hal Baru","penasaran bagaimana sesuatu bekerja","menarik","mencoba percobaan sederhana","jelas dan mudah dipahami"],"Fantasi":["Pintu Ajaib","menemukan pintu ajaib di bawah pohon","ajaib","masuk ke dunia sihir","kembali dengan hadiah ajaib"],"Petualangan":["Menuju Puncak Rinjani","berangkat mencari harta karun di gunung","menantang","menyeberangi jembatan tua yang bergoyang","menemukan harta yang dicari"],"Persahabatan":["Dua Sahabat","kehilangan temannya karena salah paham","sedih","meminta maaf dengan tulus","berbaikan dan makin akrab"],"Emosional / Mengharukan":["Pelukan yang Ditunggu","merindukan seseorang yang jauh","haru","menerima kabar yang selama ini ditunggu","bertemu dan berpelukan"],"Misteri":["Jejak Misterius","menemukan jejak kaki aneh di halaman","penuh teka-teki","mengikuti jejak sampai ke gudang","menemukan jawabannya"],"Heist / Pencurian":["Misi Rahasia","merencanakan misi mengambil kue di dapur","tegang","menyelinap melewati penjaga","berhasil kabur membawa hadiahnya"]};
+function story(c){const n=c.chars.map((x,i)=>x.name||"Tokoh "+(i+1)),A=n[0],B=n[1],p=PR[c.tema.replace(/^\S+\s/,"")]||PR.Komedi;
+ return `Judul: ${A} dan ${p[0]}\n${A} ${p[1]}.\n${B?B+" datang dan ikut terlibat.":A+" mulai merasa ada yang tidak biasa."}\nSemakin lama keadaan semakin ${p[2]}.\nPuncaknya, ${A} ${p[3]}.\nAkhirnya semuanya ${p[4]}, dan ${A} belajar sesuatu yang berharga.`}
+$("#auto").onclick=()=>{fillChars();$("#ide").value=story(cfg())};
+/* buat plan (template, tanpa AI) */
+const CAM=["slow push-in close-up","wide establishing shot","gentle pan left to right","low-angle hero shot","handheld follow shot","top-down shot","slow zoom-out reveal","over-the-shoulder shot"];
+const mm=x=>String(Math.floor(x/60)).padStart(2,"0")+":"+String(x%60).padStart(2,"0");
+function units(text,n){let u=text.split(/\n+/).map(x=>x.trim()).filter(x=>x&&!/^judul\s*:/i.test(x)).flatMap(x=>x.split(/(?<=[.!?])\s+/)).filter(Boolean);
+ while(u.length<n){let k=-1,m=3;u.forEach((x,i)=>{const w=x.split(/\s+/).length;if(w>m){m=w;k=i}});if(k<0)break;const w=u[k].split(/\s+/),h=Math.ceil(w.length/2);u.splice(k,1,w.slice(0,h).join(" "),w.slice(h).join(" "))}
+ return u}
+function kw(t){return t.replace(/[^\p{L}\s]/gu,"").split(/\s+/).filter(w=>w.length>3).sort((a,b)=>b.length-a.length).slice(0,2).join(" ").toUpperCase()}
+$("#go").onclick=()=>{$("#err").textContent="";fillChars();const c=cfg(),T=parseInt(c.durasi);
+ if(Math.ceil(T/c.sd)>20)return $("#err").textContent="Terlalu banyak adegan (maks 20). Pilih durasi adegan lebih panjang atau kurangi durasi video.";
+ const raw=c.ide||story(c);let n=Math.ceil(T/c.sd);const u=units(raw,n);n=Math.min(n,u.length);
+ const tl=(raw.match(/^judul\s*:\s*(.+)$/im)||[])[1]||u[0].split(/\s+/).slice(0,6).join(" ");
+ const chars=c.chars.map(x=>({name:x.name,look:x.look,refPrompt:`Clay (plasticine) stop-motion character reference sheet, front, side and back views, plain light gray background, soft studio light. ${x.name}: ${x.look}`}));
+ const cl=chars.map(x=>`${x.name}: ${x.look}`).join(" | "),mood=c.tema.replace(/^\S+\s/,"").toLowerCase()+" mood";
+ const scenes=Array.from({length:n},(_,i)=>{const t=u.slice(Math.floor(i*u.length/n),Math.floor((i+1)*u.length/n)).join(" ");
+  const ip=`Handmade clay (plasticine) stop-motion style, visible fingerprint texture, soft studio lighting, vibrant colors, ${c.ratio} frame, ${mood}. Characters (keep identical in every scene) — ${cl}. Scene: ${t}`;
+  return {time:mm(i*c.sd)+"-"+mm(Math.min(T,(i+1)*c.sd)),visual:t,narasi:t,subtitle:c.subtitle==="Tanpa Teks"?"":kw(t),imagePrompt:ip,videoPrompt:`${ip} Camera: ${CAM[i%CAM.length]}. ${c.sd}-second clay stop-motion animation, smooth movement, consistent characters and style.`}});
+ const j={title:tl,characters:chars,scenes,caption:`${tl} 🎨 Animasi clay ${c.tema.replace(/^\S+\s/,"")} yang bikin betah nonton!`,hashtags:["#KanakSasak","#ClayAnimation","#AnimasiClay","#Lombok","#Sasak","#fyp"],cfg:c,date:new Date().toLocaleDateString("id-ID")};
+ mem.unshift(j);mem=mem.slice(0,20);saveG();gal();render(j)};
+/* hasil */
+function render(j){window._j=j;const c=j.cfg||{};
+ $("#res").innerHTML=`<h2>${esc(j.title)}</h2><div class="meta">${esc(c.durasi)} • ${c.sd||8} dtk/adegan • ${esc(c.ratio)} • ${esc(c.tema)} • ${esc(c.bahasa)}</div>
+ ${(j.characters||[]).map((x,ci)=>`<div class="sc"><span class="t">KARAKTER</span> <b style="font-size:13px">${esc(x.name)}</b><p>${esc(x.look)}</p><h4>PROMPT FOTO REFERENSI <button class="cp" data-ch="${ci}">SALIN</button></h4><p class="rf">${esc(x.refPrompt)}</p><button class="cp" style="float:none;margin-top:8px" data-img="${ci}">🖼 BUAT GAMBAR REFERENSI</button><div id="im${ci}"></div></div>`).join("")}
+ ${j.scenes.map((s,i)=>`<div class="sc"><span class="t">ADEGAN ${i+1} • ${esc(s.time)}</span>
+ <h4>TEKS NARASI STUDIO</h4><p>${esc(s.narasi)}</p>${s.subtitle?`<span class="sub-b">${esc(s.subtitle)}</span>`:""}<br><button class="cp" style="float:none;margin-top:8px" data-tts="${i}">🔊 PUTAR NARASI</button>
+ <h4>PROMPT GAMBAR <button class="cp" data-c="${i}.imagePrompt">SALIN</button></h4><p>${esc(s.imagePrompt)}</p><button class="cp" style="float:none;margin-top:8px" data-simg="${i}">🖼 BUAT GAMBAR ADEGAN</button><div id="sm${i}"></div>
+ <h4>PROMPT VIDEO <button class="cp" data-c="${i}.videoPrompt">SALIN</button></h4><p>${esc(s.videoPrompt)}</p></div>`).join("")}
+ <div class="sc"><h4 style="margin-top:0">CAPTION <button class="cp" data-c="cap">SALIN</button></h4><p>${esc(j.caption)}</p><div class="tags" style="color:#7a1fff">${esc((j.hashtags||[]).join(" "))}</div></div>
+ <div class="row"><button class="btn" id="all">SALIN SEMUA</button><button class="btn red" id="back">BUAT BARU</button></div>`;show("res")}
+async function copy(t,b){try{await navigator.clipboard.writeText(t)}catch(e){const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();try{document.execCommand("copy")}catch(_){}a.remove()}
+ if(b){const o=b.textContent;b.textContent="✓ TERSALIN";setTimeout(()=>b.textContent=o,1200)}}
+/* suara bawaan perangkat */
+const LG={"Bahasa Indonesia":"id-ID","Bahasa Inggris":"en-US","Mandarin (China)":"zh-CN","Japanese (Jepang)":"ja-JP","Korean (Korea)":"ko-KR","Bahasa Melayu (Malaysia)":"ms-MY","Arabic (Arab)":"ar-SA","Hindi (India)":"hi-IN","Bahasa Jawa (Indonesia)":"id-ID","Bahasa Sunda (Indonesia)":"id-ID"};
+const SS="speechSynthesis" in window;
+function voices(){const l=(LG[$("#bhs").value]||"id-ID").slice(0,2),v=SS?speechSynthesis.getVoices().filter(x=>x.lang.toLowerCase().startsWith(l)):[];$("#voice").innerHTML=v.length?v.map(x=>`<option>${esc(x.name)}</option>`).join(""):"<option>Suara bawaan perangkat</option>"}
+if(SS)speechSynthesis.onvoiceschanged=voices;$("#bhs").onchange=voices;voices();
+function say(text,b){if(!SS)return alert("Browser ini tidak mendukung suara bawaan.");const was=b._on;speechSynthesis.cancel();if(was){b._on=false;b.textContent="🔊 PUTAR NARASI";return}
+ const u=new SpeechSynthesisUtterance(text);u.lang=LG[$("#bhs").value]||"id-ID";const v=speechSynthesis.getVoices().find(x=>x.name===$("#voice").value);if(v)u.voice=v;
+ b._on=true;b.textContent="⏹ BERHENTI";u.onend=u.onerror=()=>{b._on=false;b.textContent="🔊 PUTAR NARASI"};speechSynthesis.speak(u)}
+/* gambar gratis tanpa key */
+function pimg(prompt,box){const r=(window._j.cfg||{}).ratio,w=r==="16:9"?1024:576,h=r==="16:9"?576:1024,u="https://image.pollinations.ai/prompt/"+encodeURIComponent(prompt.slice(0,800))+`?width=${w}&height=${h}&nologo=true&seed=${Math.floor(Math.random()*1e6)}`;
+ box.innerHTML='<div style="font-size:11px;color:#7a6f85;margin-top:8px">⏳ Membuat gambar... (bisa 10–30 detik)</div>';
+ const im=new Image();im.style.cssText="width:100%;border-radius:14px;margin-top:8px";
+ im.onload=()=>{box.innerHTML="";box.appendChild(im);const a=document.createElement("a");a.href=u;a.target="_blank";a.rel="noopener";a.className="cp";a.style.cssText="float:none;display:inline-block;margin-top:6px;text-decoration:none;color:inherit";a.textContent="⬇ BUKA / UNDUH";box.appendChild(a)};
+ im.onerror=()=>{box.innerHTML='<div class="err">Gambar gagal dimuat. Layanan gambar gratis mungkin sedang sibuk atau berubah. Coba lagi nanti, atau salin prompt ke generator gambar Anda.</div>'};im.src=u}
+$("#res").onclick=e=>{const j=window._j,b=e.target.closest("button");if(!b)return;
+ if(b.dataset.ch){copy(j.characters[b.dataset.ch].refPrompt,b);return}
+ if(b.dataset.img!=null){pimg(j.characters[b.dataset.img].refPrompt,$("#im"+b.dataset.img));return}
+ if(b.dataset.simg!=null){pimg(j.scenes[b.dataset.simg].imagePrompt,$("#sm"+b.dataset.simg));return}
+ if(b.dataset.tts!=null){say(j.scenes[b.dataset.tts].narasi,b);return}
+ if(b.dataset.c){const k=b.dataset.c;copy(k==="cap"?j.caption+"\n"+j.hashtags.join(" "):j.scenes[k.split(".")[0]][k.split(".")[1]],b)}
+ if(b.id==="all")copy(j.title+"\n\n"+j.scenes.map((s,i)=>`ADEGAN ${i+1} (${s.time})\n${s.narasi}\nIMG: ${s.imagePrompt}\nVID: ${s.videoPrompt}`).join("\n\n")+"\n\n"+j.caption+"\n"+j.hashtags.join(" "),b);
+ if(b.id==="back")show("home")};
+loadG();gal();
+</script></body></html>
