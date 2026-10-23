@@ -76,7 +76,6 @@ textarea{min-height:96px;resize:vertical;font-weight:500}
 <section class="scr" id="cfg">
  <div class="form">
   <h2>KONFIGURASI CERITA 🎨</h2><div class="sub">DESIGNING YOUR NEXT VIRAL CLAY ANIMATION.</div>
-  <label>🔑 Google AI Studio API Key</label><input id="key" type="password" autocomplete="off" placeholder="Tempel API key (tersimpan di browser ini saja)" style="width:100%;border:1.5px solid #e6e1ee;background:#f7f5fb;border-radius:14px;padding:13px 12px;font:600 12px Poppins,sans-serif">
   <label>⏱ Durasi Video</label><select id="dur"></select>
   <label>🎞 Ratio Layar</label>
   <div class="seg" id="ratio"><button class="on" data-v="9:16">9:16</button><button data-v="16:9">16:9</button></div>
@@ -101,7 +100,7 @@ textarea{min-height:96px;resize:vertical;font-weight:500}
    <div class="seg cy" id="sub"><button data-v="Tanpa Teks">TANPA TEKS</button><button class="on" data-v="Subtitle Dinamis">SUBTITLE DINAMIS</button></div>
    <label>Bahasa Video</label><select id="bhs"></select>
    <label>Gaya Bahasa</label><select id="gaya"></select>
-   <label>Suara Narator</label><select id="voice"><option>Kore</option><option>Puck</option><option>Charon</option><option>Zephyr</option><option>Leda</option><option>Fenrir</option><option>Aoede</option><option>Orus</option></select>
+   <label>Suara Narator (bawaan perangkat)</label><select id="voice"></select>
   </div>
   <div class="err" id="err"></div>
   <div class="foot"><button class="x" id="batal">BATAL</button><button class="btn red" id="go">CREATE CLAYVERSE PLAN ✏️</button></div>
@@ -113,7 +112,8 @@ textarea{min-height:96px;resize:vertical;font-weight:500}
  <h3>Studio Engine<br><span>SEDANG BERPIKIR</span></h3>
  <p>MENGANALISIS OBJEK, MERANCANG TRANSISI AESTHETIC, DAN MENYUSUN BLUEPRINT VIDEO VIRAL.</p>
  <div class="bar"><div id="pg"></div></div>
- <p id="pt">● PROCESSING DATA... 0%</p>
+ <p id="pt">● MENUNGGU GOOGLE... 0 dtk</p>
+ <button class="btn" id="cancel" style="margin-top:14px;padding:11px 22px">BATALKAN</button>
 </section>
 
 <section class="scr res" id="res"></section>
@@ -121,113 +121,97 @@ textarea{min-height:96px;resize:vertical;font-weight:500}
 <script>
 const $=s=>document.querySelector(s);
 const O={
- dur:[10,20,30,40,50,60,70,80,90,100,110,120,130].map(n=>[n,n+" Detik"]),
+ dur:[10,20,30,40,50,60,70,80,90,100,110,120,130].map(n=>n+" Detik"),
  tema:["😂 Komedi","👻 Horor","🐾 Dunia Hewan","📚 Edukasi","🧚 Fantasi","🧭 Petualangan","🤝 Persahabatan","🥹 Emosional / Mengharukan","🕵️ Misteri","💰 Heist / Pencurian"],
  jenis:["👨 Manusia Dewasa","🧒 Anak-anak","👵 Lansia","🐶 Hewan Peliharaan","🦁 Hewan Liar","🐮 Hewan Ternak","🐉 Makhluk Fantasi","🤖 Robot","👽 Alien","👾 Monster Lucu","🦸 Superhero","🧙 Penyihir","🏴‍☠️ Bajak Laut","👨‍🚀 Astronaut","💼 Profesi Spesifik","🧑‍🤝‍🧑 Kombinasi Manusia + Hewan"],
  bhs:["Bahasa Indonesia","Bahasa Inggris","Mandarin (China)","Japanese (Jepang)","Korean (Korea)","Bahasa Melayu (Malaysia)","Arabic (Arab)","Hindi (India)","Bahasa Jawa (Indonesia)","Bahasa Sunda (Indonesia)"],
  gaya:["Santai — ringan, natural, seperti ngobrol sehari-hari.","Storytelling — mengalir seperti sedang menceritakan sebuah kisah.","Dramatis — emosional, tegang, dan membangun rasa penasaran.","Inspiratif — membangkitkan semangat dan motivasi.","Persuasif — meyakinkan dan mendorong audiens untuk bertindak.","Edukatif — informatif, jelas, dan mudah dipahami.","Provokatif — memancing rasa penasaran, reaksi, dan diskusi.","Emosional — menyentuh perasaan dan membangun koneksi."]
 };
-function fill(id,a){$(id).innerHTML=a.map(x=>Array.isArray(x)?`<option value="${x[1]}">${x[1]}</option>`:`<option>${x}</option>`).join("")}
+const fill=(id,a)=>$(id).innerHTML=a.map(x=>`<option>${x}</option>`).join("");
 fill("#dur",O.dur);fill("#tema",O.tema);fill("#jenis",O.jenis);fill("#bhs",O.bhs);fill("#gaya",O.gaya);
 $("#dur").value="30 Detik";
 document.querySelectorAll(".seg").forEach(s=>s.onclick=e=>{const b=e.target.closest("button");if(!b)return;s.querySelectorAll("button").forEach(x=>x.classList.remove("on"));b.classList.add("on")});
 const val=id=>$(id+" .on").dataset.v;
 function show(id){document.querySelectorAll(".scr").forEach(s=>s.classList.toggle("on",s.id===id));scrollTo(0,0)}
-let mem=[];
-function loadG(){try{mem=JSON.parse(localStorage.getItem("clayverse")||"[]")}catch(e){}}
-function saveG(){try{localStorage.setItem("clayverse",JSON.stringify(mem))}catch(e){}}
-function gal(){$("#gal").innerHTML=mem.length?mem.map((m,i)=>`<div class="gi" data-i="${i}"><div class="th">🎨</div><div><b>${esc(m.title)}</b><small>${m.date} • ${m.scenes.length} ADEGAN</small></div></div>`).join(""):'<div class="empty">Belum ada karya. Mulai buat konten clay pertamamu!</div>'}
 function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+let mem=[];
+function loadG(){try{mem=JSON.parse(localStorage.getItem("kanaksasak")||"[]")}catch(e){}}
+function saveG(){try{localStorage.setItem("kanaksasak",JSON.stringify(mem))}catch(e){}}
+function gal(){$("#gal").innerHTML=mem.length?mem.map((m,i)=>`<div class="gi" data-i="${i}"><div class="th">🎨</div><div><b>${esc(m.title)}</b><small>${m.date} • ${m.scenes.length} ADEGAN</small></div></div>`).join(""):'<div class="empty">Belum ada karya. Mulai buat konten clay pertamamu!</div>'}
 $("#gal").onclick=e=>{const g=e.target.closest(".gi");if(g)render(mem[g.dataset.i])};
 $("#start").onclick=()=>show("cfg");$("#batal").onclick=()=>show("home");
 $("#rnd").onclick=()=>{$("#jenis").selectedIndex=Math.floor(Math.random()*O.jenis.length);$("#tema").selectedIndex=Math.floor(Math.random()*O.tema.length)};
+/* karakter */
+const NM=["Lalu Arya","Baiq Sari","Amaq Jaya","Inaq Ratna","Lalu Bayu","Baiq Dewi","Mamiq Agus","Lalu Rinjani"],HR=["short curly black hair","neat side-parted hair","a tiny top-knot","long braided hair","fluffy round hair"],OF=["a red and gold Sasak songket sarong","a blue batik shirt","green overalls","an orange hoodie","a white udeng headband and brown vest"],CL=["warm brown","peach","tan","caramel","light beige"],EY=["big round shiny eyes","wide friendly eyes","small curious eyes"];
+const mkLook=j=>`A cute clay (plasticine) ${j.replace(/^\S+\s/,"")} character, ${pick(CL)} clay skin, ${pick(EY)}, ${pick(HR)}, wearing ${pick(OF)}, chubby handmade proportions, visible fingerprint texture`;
 let CH=[];const nChar=()=>parseInt(val("#jml"));
 function drawChars(){const n=nChar();while(CH.length<4)CH.push({name:"",look:""});
- $("#chars").innerHTML=CH.slice(0,n).map((x,i)=>`<div class="cc"><div class="bh"><span>KARAKTER ${i+1}</span><button class="pill" data-a="${i}">✨ BUAT OTOMATIS</button></div><input data-n="${i}" placeholder="Nama karakter (mis. Arto)" value="${esc(x.name)}"><textarea data-l="${i}" placeholder="Ciri fisik tetap: wajah, rambut, baju, warna, aksesori... (dipakai persis di semua adegan)">${esc(x.look)}</textarea></div>`).join("")}
+ $("#chars").innerHTML=CH.slice(0,n).map((x,i)=>`<div class="cc"><div class="bh"><span>KARAKTER ${i+1}</span><button class="pill" data-a="${i}">✨ BUAT OTOMATIS</button></div><input data-n="${i}" placeholder="Nama karakter (mis. Lalu Arya)" value="${esc(x.name)}"><textarea data-l="${i}" placeholder="Ciri fisik tetap: wajah, rambut, baju, warna, aksesori... (dipakai persis di semua adegan)">${esc(x.look)}</textarea></div>`).join("")}
+function autoChar(i,force){const used=CH.map(x=>x.name);if(force||!CH[i].name)CH[i].name=pick(NM.filter(n=>!used.includes(n))||NM)||pick(NM);if(force||!CH[i].look)CH[i].look=mkLook($("#jenis").value)}
 $("#chars").oninput=e=>{const t=e.target;if(t.dataset.n!=null)CH[t.dataset.n].name=t.value;if(t.dataset.l!=null)CH[t.dataset.l].look=t.value};
-$("#chars").onclick=e=>{const b=e.target.closest("button[data-a]");if(b)autoChar(+b.dataset.a,b)};
+$("#chars").onclick=e=>{const b=e.target.closest("button[data-a]");if(b){autoChar(+b.dataset.a,true);drawChars()}};
 $("#jml").addEventListener("click",drawChars);
-$("#autoc").onclick=async e=>{const b=e.target;b.disabled=true;for(let i=0;i<nChar();i++)await autoChar(i);b.disabled=false};
-async function autoChar(i,btn){if(!sample)return noAI();const c=cfg(),o=CH.slice(0,nChar()).map((x,k)=>k!==i?x.name:"").filter(Boolean);
- if(btn){btn.disabled=true;btn.textContent="⏳"}
- try{const r=await sample.json(`Buat 1 karakter animasi clay (plastisin) untuk video bertema ${c.tema}. Jenis: ${c.jenis}. ${c.ide?"Ide cerita: "+c.ide+". ":""}${CH[i].name?"Nama harus: "+CH[i].name+". ":""}Karakter lain (jangan mirip): ${o.join(", ")||"-"}. Balas HANYA JSON: {"name":"nama pendek","look":"English visual description 35-50 words: face, eyes, hair, clay color, outfit, accessories, body proportion, signature clay texture"}`,{cache:false});
-  CH[i].name=r.name||CH[i].name;CH[i].look=r.look||"";drawChars()}
- catch(e){$("#err").textContent="Gagal: "+(e.message||e.code||"coba lagi");if(btn){btn.disabled=false;btn.textContent="✨ BUAT OTOMATIS"}}}
+$("#autoc").onclick=()=>{for(let i=0;i<nChar();i++)autoChar(i,true);drawChars()};
 drawChars();
-let sample=null;
-const K=()=>{try{return localStorage.getItem("gkey")||""}catch(e){return ""}};
-$("#key").value=K();$("#key").oninput=()=>{try{localStorage.setItem("gkey",$("#key").value.trim())}catch(e){}};
-const G="https://generativelanguage.googleapis.com/v1beta/models/";
-async function gcall(models,body){const k=K();if(!k)throw new Error("Isi API key Google AI Studio dulu (di halaman Konfigurasi).");
- let last;for(const m of [].concat(models)){let r;
-  try{r=await fetch(G+m+":generateContent",{method:"POST",headers:{"Content-Type":"application/json","x-goog-api-key":k},body:JSON.stringify(body)})}catch(e){throw new Error("Tidak bisa terhubung ke Google. Buka file ini langsung di browser/hosting sendiri, bukan di halaman yang memblokir jaringan.")}
-  const d=await r.json();if(r.ok)return d;last=new Error((d.error&&d.error.message)||"HTTP "+r.status);
-  if(r.status!==404&&!/no longer available|not found|not supported/i.test(last.message))throw last}
- throw last}
-const parts=d=>((d.candidates&&d.candidates[0]&&d.candidates[0].content&&d.candidates[0].content.parts)||[]);
-async function gem(p,js){const d=await gcall(["gemini-3.8-flash","gemini-3.6-flash"],{contents:[{parts:[{text:p}]}],generationConfig:js?{responseMimeType:"application/json"}:{}});return parts(d).map(x=>x.text||"").join("")}
-sample=Object.assign(async p=>({text:await gem(p)}),{json:async p=>JSON.parse((await gem(p,true)).replace(/```json|```/g,"").trim())});
-async function genImg(prompt){const d=await gcall(["gemini-3.1-flash-image","gemini-2.5-flash-image"],{contents:[{parts:[{text:prompt}]}],generationConfig:{responseModalities:["IMAGE"]}});
- const x=parts(d).find(x=>x.inlineData||x.inline_data);if(!x)throw new Error("Model tidak mengembalikan gambar. Coba ubah prompt.");const m=x.inlineData||x.inline_data;return "data:"+(m.mimeType||m.mime_type||"image/png")+";base64,"+m.data}
-function wav(b64){const bin=atob(b64),n=bin.length,u=new Uint8Array(44+n),v=new DataView(u.buffer),w=(o,t)=>[...t].forEach((c,i)=>v.setUint8(o+i,c.charCodeAt(0)));
- w(0,"RIFF");v.setUint32(4,36+n,true);w(8,"WAVEfmt ");v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,24000,true);v.setUint32(28,48000,true);v.setUint16(32,2,true);v.setUint16(34,16,true);w(36,"data");v.setUint32(40,n,true);
- for(let i=0;i<n;i++)u[44+i]=bin.charCodeAt(i);return URL.createObjectURL(new Blob([u],{type:"audio/wav"}))}
-async function genTTS(text){const d=await gcall(["gemini-3.8-flash-tts","gemini-3.1-flash-tts-preview"],{contents:[{parts:[{text}]}],generationConfig:{responseModalities:["AUDIO"],speechConfig:{voiceConfig:{prebuiltVoiceConfig:{voiceName:$("#voice").value}}}}});
- const x=parts(d).find(x=>x.inlineData||x.inline_data);if(!x)throw new Error("Model tidak mengembalikan audio.");return wav((x.inlineData||x.inline_data).data)}
-const dl='class="cp" style="float:none;display:inline-block;margin-top:6px;text-decoration:none;color:inherit"';
-async function mkImg(i,b){const x=window._j.characters[i],o=b.textContent,box=$("#im"+i);b.disabled=true;b.textContent="⏳ MEMBUAT...";
- try{const u=await genImg((x.refPrompt||("Clay stop-motion character reference sheet, front, side and back views, plain gray background."))+" Character: "+x.look);
-  box.innerHTML=`<img src="${u}" style="width:100%;border-radius:14px;margin-top:8px"><a ${dl} href="${u}" download="${esc(x.name||"karakter")}.png">⬇ UNDUH</a>`;b.textContent="🔁 BUAT ULANG"}
- catch(e){box.innerHTML=`<div class="err">${esc(e.message)}</div>`;b.textContent=o}b.disabled=false}
-async function mkTts(i,b){const s=window._j.scenes[i],o=b.textContent,box=$("#au"+i);b.disabled=true;b.textContent="⏳ MEMBUAT...";
- try{const u=await genTTS(s.narasi);box.innerHTML=`<audio controls src="${u}" style="width:100%;margin-top:8px"></audio><a ${dl} href="${u}" download="adegan-${i+1}.wav">⬇ UNDUH</a>`;b.textContent="🔁 BUAT ULANG"}
- catch(e){box.innerHTML=`<div class="err">${esc(e.message)}</div>`;b.textContent=o}b.disabled=false}
-loadG();gal();
 const cfg=()=>({durasi:$("#dur").value,ratio:val("#ratio"),tema:$("#tema").value,jumlah:val("#jml"),jenis:$("#jenis").value,ide:$("#ide").value.trim(),audio:val("#mode"),subtitle:val("#sub"),bahasa:$("#bhs").value,gaya:$("#gaya").value,sd:parseInt(val("#sdur")),chars:CH.slice(0,nChar()).map(x=>({name:x.name.trim(),look:x.look.trim()}))});
-function noAI(){$("#err").textContent="Fitur AI belum tersedia di tampilan ini. Buka halaman lewat claude.ai dan izinkan akses.";}
-$("#auto").onclick=async()=>{
- if(!sample)return noAI();$("#err").textContent="";const c=cfg(),b=$("#auto");b.disabled=true;b.textContent="⏳ MENULIS CERITA...";
- try{const r=await sample(`Buat satu ide cerita pendek untuk video animasi clay (plastisin) ${c.durasi}, tema ${c.tema}, ${c.jumlah} karakter bertipe ${c.jenis}. Bahasa: ${c.bahasa}. Format: judul tebal, lalu rincian per detik (Hook 0-5 detik, isi, ending). Maksimal 150 kata. Tanpa pembuka/penutup.${c.ide?" Kembangkan dari ide ini: "+c.ide:""}`);$("#ide").value=r.text.trim()}
- catch(e){$("#err").textContent="Gagal membuat cerita: "+(e.message||e.code||"coba lagi")}
- b.disabled=false;b.textContent="✨ GENERATE CERITA OTOMATIS ✨"};
-let tm;function prog(){let p=3;$("#pg").style.width="3%";clearInterval(tm);tm=setInterval(()=>{p=Math.min(95,p+Math.random()*7);$("#pg").style.width=p+"%";$("#pt").textContent="● PROCESSING DATA... "+Math.round(p)+"%"},700)}
-$("#go").onclick=async()=>{
- if(!sample)return noAI();const c=cfg();$("#err").textContent="";
- if(Math.ceil(parseInt(c.durasi)/c.sd)>20)return $("#err").textContent="Terlalu banyak adegan (maks 20). Pilih durasi adegan lebih panjang atau kurangi durasi video.";
- show("load");prog();
- const T=parseInt(c.durasi),n=Math.ceil(T/c.sd),mm=x=>String(Math.floor(x/60)).padStart(2,"0")+":"+String(x%60).padStart(2,"0");
- const ts=Array.from({length:n},(_,i)=>mm(i*c.sd)+"-"+mm(Math.min(T,(i+1)*c.sd)));
- const cb=c.chars.some(x=>x.name||x.look)?"KARAKTER TETAP (wajib dipakai persis, jangan diubah): "+c.chars.map((x,i)=>`${i+1}. ${x.name||"(beri nama)"} — ${x.look||"(buat ciri fisik detail)"}`).join(" | "):"";
- const p=`Kamu adalah sutradara animasi clay (stop-motion plastisin) viral. Buat blueprint video.
-Durasi ${c.durasi}, rasio ${c.ratio}, tema ${c.tema}, ${c.jumlah} karakter (${c.jenis}), mode audio ${c.audio}, subtitle: ${c.subtitle}, bahasa video: ${c.bahasa}, gaya bahasa: ${c.gaya}.
-Ide cerita: ${c.ide||"(buat sendiri yang kreatif dan viral)"}
-Buat tepat ${n} adegan berurutan, masing-masing ${c.sd} detik, dengan rentang waktu persis: ${ts.join(", ")}. ${cb} Konsistensi karakter WAJIB: di setiap imagePrompt dan videoPrompt tulis ulang ciri fisik lengkap karakter yang muncul (identik di semua adegan, dalam bahasa Inggris: wajah, warna, pakaian, tekstur clay), jangan diringkas. Isi refPrompt tiap karakter dengan prompt English untuk character reference sheet clay (tampak depan, samping, belakang, latar polos abu-abu). Tiap videoPrompt harus menyebut durasi ${c.sd} seconds. Gaya visual: handmade clay, fingerprint texture, warna cerah, sinematik.
-Balas HANYA JSON valid: {"title":"","characters":[{"name":"","look":"","refPrompt":""}],"scenes":[{"time":"00:00-00:08","visual":"deskripsi adegan (Indonesia)","narasi":"teks ${c.audio==="Dialog"?"dialog tiap karakter 'Nama: ucapan'":"narasi"} dalam ${c.bahasa}","subtitle":"1-3 kata kunci huruf besar","imagePrompt":"English prompt for clay-style still image, ${c.ratio}","videoPrompt":"English prompt for ${c.ratio} clay stop-motion video with camera movement"}],"caption":"","hashtags":["#..."]}`;
- try{
-  const j=await sample.json(p,{modelTier:"complex",cache:false});
-  clearInterval(tm);$("#pg").style.width="100%";
-  j.characters=(j.characters||[]).map((x,i)=>({...x,name:(c.chars[i]&&c.chars[i].name)||x.name,look:(c.chars[i]&&c.chars[i].look)||x.look}));j.scenes.forEach((s,i)=>{if(ts[i])s.time=ts[i]});j.cfg=c;j.date=new Date().toLocaleDateString("id-ID");mem.unshift(j);mem=mem.slice(0,20);saveG();gal();render(j);
- }catch(e){clearInterval(tm);show("cfg");$("#err").textContent="Gagal membuat plan: "+(e.message||e.code||"coba lagi")}
-};
-function render(j){
- window._j=j;const c=j.cfg||{};
+function fillChars(){for(let i=0;i<nChar();i++)autoChar(i,false);drawChars()}
+/* cerita otomatis (template, tanpa AI) */
+const PR={"Komedi":["Kekacauan Lucu","tanpa sengaja membuat kekacauan kecil di desa","kacau dan konyol","terpeleset sampai semua orang tertawa","kembali damai penuh tawa"],"Horor":["Suara di Malam Hari","mendengar suara aneh dari belakang rumah","menegangkan","memberanikan diri membuka pintu","ternyata hanya kejutan yang lucu"],"Dunia Hewan":["Sahabat Hutan","bertemu hewan kecil yang tersesat di hutan","seru","menolongnya menyeberangi sungai","bahagia dan hewan itu pulang ke keluarganya"],"Edukasi":["Belajar Hal Baru","penasaran bagaimana sesuatu bekerja","menarik","mencoba percobaan sederhana","jelas dan mudah dipahami"],"Fantasi":["Pintu Ajaib","menemukan pintu ajaib di bawah pohon","ajaib","masuk ke dunia sihir","kembali dengan hadiah ajaib"],"Petualangan":["Menuju Puncak Rinjani","berangkat mencari harta karun di gunung","menantang","menyeberangi jembatan tua yang bergoyang","menemukan harta yang dicari"],"Persahabatan":["Dua Sahabat","kehilangan temannya karena salah paham","sedih","meminta maaf dengan tulus","berbaikan dan makin akrab"],"Emosional / Mengharukan":["Pelukan yang Ditunggu","merindukan seseorang yang jauh","haru","menerima kabar yang selama ini ditunggu","bertemu dan berpelukan"],"Misteri":["Jejak Misterius","menemukan jejak kaki aneh di halaman","penuh teka-teki","mengikuti jejak sampai ke gudang","menemukan jawabannya"],"Heist / Pencurian":["Misi Rahasia","merencanakan misi mengambil kue di dapur","tegang","menyelinap melewati penjaga","berhasil kabur membawa hadiahnya"]};
+function story(c){const n=c.chars.map((x,i)=>x.name||"Tokoh "+(i+1)),A=n[0],B=n[1],p=PR[c.tema.replace(/^\S+\s/,"")]||PR.Komedi;
+ return `Judul: ${A} dan ${p[0]}\n${A} ${p[1]}.\n${B?B+" datang dan ikut terlibat.":A+" mulai merasa ada yang tidak biasa."}\nSemakin lama keadaan semakin ${p[2]}.\nPuncaknya, ${A} ${p[3]}.\nAkhirnya semuanya ${p[4]}, dan ${A} belajar sesuatu yang berharga.`}
+$("#auto").onclick=()=>{fillChars();$("#ide").value=story(cfg())};
+/* buat plan (template, tanpa AI) */
+const CAM=["slow push-in close-up","wide establishing shot","gentle pan left to right","low-angle hero shot","handheld follow shot","top-down shot","slow zoom-out reveal","over-the-shoulder shot"];
+const mm=x=>String(Math.floor(x/60)).padStart(2,"0")+":"+String(x%60).padStart(2,"0");
+function units(text,n){let u=text.split(/\n+/).map(x=>x.trim()).filter(x=>x&&!/^judul\s*:/i.test(x)).flatMap(x=>x.split(/(?<=[.!?])\s+/)).filter(Boolean);
+ while(u.length<n){let k=-1,m=3;u.forEach((x,i)=>{const w=x.split(/\s+/).length;if(w>m){m=w;k=i}});if(k<0)break;const w=u[k].split(/\s+/),h=Math.ceil(w.length/2);u.splice(k,1,w.slice(0,h).join(" "),w.slice(h).join(" "))}
+ return u}
+function kw(t){return t.replace(/[^\p{L}\s]/gu,"").split(/\s+/).filter(w=>w.length>3).sort((a,b)=>b.length-a.length).slice(0,2).join(" ").toUpperCase()}
+$("#go").onclick=()=>{$("#err").textContent="";fillChars();const c=cfg(),T=parseInt(c.durasi);
+ if(Math.ceil(T/c.sd)>20)return $("#err").textContent="Terlalu banyak adegan (maks 20). Pilih durasi adegan lebih panjang atau kurangi durasi video.";
+ const raw=c.ide||story(c);let n=Math.ceil(T/c.sd);const u=units(raw,n);n=Math.min(n,u.length);
+ const tl=(raw.match(/^judul\s*:\s*(.+)$/im)||[])[1]||u[0].split(/\s+/).slice(0,6).join(" ");
+ const chars=c.chars.map(x=>({name:x.name,look:x.look,refPrompt:`Clay (plasticine) stop-motion character reference sheet, front, side and back views, plain light gray background, soft studio light. ${x.name}: ${x.look}`}));
+ const cl=chars.map(x=>`${x.name}: ${x.look}`).join(" | "),mood=c.tema.replace(/^\S+\s/,"").toLowerCase()+" mood";
+ const scenes=Array.from({length:n},(_,i)=>{const t=u.slice(Math.floor(i*u.length/n),Math.floor((i+1)*u.length/n)).join(" ");
+  const ip=`Handmade clay (plasticine) stop-motion style, visible fingerprint texture, soft studio lighting, vibrant colors, ${c.ratio} frame, ${mood}. Characters (keep identical in every scene) — ${cl}. Scene: ${t}`;
+  return {time:mm(i*c.sd)+"-"+mm(Math.min(T,(i+1)*c.sd)),visual:t,narasi:t,subtitle:c.subtitle==="Tanpa Teks"?"":kw(t),imagePrompt:ip,videoPrompt:`${ip} Camera: ${CAM[i%CAM.length]}. ${c.sd}-second clay stop-motion animation, smooth movement, consistent characters and style.`}});
+ const j={title:tl,characters:chars,scenes,caption:`${tl} 🎨 Animasi clay ${c.tema.replace(/^\S+\s/,"")} yang bikin betah nonton!`,hashtags:["#KanakSasak","#ClayAnimation","#AnimasiClay","#Lombok","#Sasak","#fyp"],cfg:c,date:new Date().toLocaleDateString("id-ID")};
+ mem.unshift(j);mem=mem.slice(0,20);saveG();gal();render(j)};
+/* hasil */
+function render(j){window._j=j;const c=j.cfg||{};
  $("#res").innerHTML=`<h2>${esc(j.title)}</h2><div class="meta">${esc(c.durasi)} • ${c.sd||8} dtk/adegan • ${esc(c.ratio)} • ${esc(c.tema)} • ${esc(c.bahasa)}</div>
- ${(j.characters||[]).map((x,ci)=>`<div class="sc"><span class="t">KARAKTER</span> <b style="font-size:13px">${esc(x.name)}</b><p>${esc(x.look)}</p>${x.refPrompt?`<h4>PROMPT FOTO REFERENSI <button class="cp" data-ch="${ci}">SALIN</button></h4><p class="rf">${esc(x.refPrompt)}</p>`:""}<button class="cp" style="float:none;margin-top:8px" data-img="${ci}">🖼 BUAT GAMBAR REFERENSI</button><div id="im${ci}"></div></div>`).join("")}
+ ${(j.characters||[]).map((x,ci)=>`<div class="sc"><span class="t">KARAKTER</span> <b style="font-size:13px">${esc(x.name)}</b><p>${esc(x.look)}</p><h4>PROMPT FOTO REFERENSI <button class="cp" data-ch="${ci}">SALIN</button></h4><p class="rf">${esc(x.refPrompt)}</p><button class="cp" style="float:none;margin-top:8px" data-img="${ci}">🖼 BUAT GAMBAR REFERENSI</button><div id="im${ci}"></div></div>`).join("")}
  ${j.scenes.map((s,i)=>`<div class="sc"><span class="t">ADEGAN ${i+1} • ${esc(s.time)}</span>
- <h4>VISUAL</h4><p>${esc(s.visual)}</p><h4>TEKS NARASI STUDIO</h4><p>${esc(s.narasi)}</p><button class="cp" style="float:none;margin-top:8px" data-tts="${i}">🔊 BUAT AUDIO NARASI</button><div id="au${i}"></div>${s.subtitle?`<span class="sub-b">${esc(s.subtitle)}</span>`:""}
- <h4>PROMPT GAMBAR <button class="cp" data-c="${i}.imagePrompt">SALIN</button></h4><p>${esc(s.imagePrompt)}</p>
+ <h4>TEKS NARASI STUDIO</h4><p>${esc(s.narasi)}</p>${s.subtitle?`<span class="sub-b">${esc(s.subtitle)}</span>`:""}<br><button class="cp" style="float:none;margin-top:8px" data-tts="${i}">🔊 PUTAR NARASI</button>
+ <h4>PROMPT GAMBAR <button class="cp" data-c="${i}.imagePrompt">SALIN</button></h4><p>${esc(s.imagePrompt)}</p><button class="cp" style="float:none;margin-top:8px" data-simg="${i}">🖼 BUAT GAMBAR ADEGAN</button><div id="sm${i}"></div>
  <h4>PROMPT VIDEO <button class="cp" data-c="${i}.videoPrompt">SALIN</button></h4><p>${esc(s.videoPrompt)}</p></div>`).join("")}
  <div class="sc"><h4 style="margin-top:0">CAPTION <button class="cp" data-c="cap">SALIN</button></h4><p>${esc(j.caption)}</p><div class="tags" style="color:#7a1fff">${esc((j.hashtags||[]).join(" "))}</div></div>
- <div class="row"><button class="btn" id="all">SALIN SEMUA</button><button class="btn red" id="back">BUAT BARU</button></div>`;
- show("res");
-}
+ <div class="row"><button class="btn" id="all">SALIN SEMUA</button><button class="btn red" id="back">BUAT BARU</button></div>`;show("res")}
 async function copy(t,b){try{await navigator.clipboard.writeText(t)}catch(e){const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();try{document.execCommand("copy")}catch(_){}a.remove()}
  if(b){const o=b.textContent;b.textContent="✓ TERSALIN";setTimeout(()=>b.textContent=o,1200)}}
-$("#res").onclick=e=>{const j=window._j;const b=e.target.closest("button");if(!b)return;
- if(b.dataset.ch){copy(j.characters[b.dataset.ch].refPrompt||"",b);return}
- if(b.dataset.img!=null){mkImg(+b.dataset.img,b);return}
- if(b.dataset.tts!=null){mkTts(+b.dataset.tts,b);return}
- if(b.dataset.c){const k=b.dataset.c;copy(k==="cap"?j.caption+"\n"+(j.hashtags||[]).join(" "):j.scenes[k.split(".")[0]][k.split(".")[1]],b)}
- if(b.id==="all")copy(j.title+"\n\n"+j.scenes.map((s,i)=>`ADEGAN ${i+1} (${s.time})\n${s.visual}\n${s.narasi}\nIMG: ${s.imagePrompt}\nVID: ${s.videoPrompt}`).join("\n\n")+"\n\n"+j.caption+"\n"+(j.hashtags||[]).join(" "),b);
+/* suara bawaan perangkat */
+const LG={"Bahasa Indonesia":"id-ID","Bahasa Inggris":"en-US","Mandarin (China)":"zh-CN","Japanese (Jepang)":"ja-JP","Korean (Korea)":"ko-KR","Bahasa Melayu (Malaysia)":"ms-MY","Arabic (Arab)":"ar-SA","Hindi (India)":"hi-IN","Bahasa Jawa (Indonesia)":"id-ID","Bahasa Sunda (Indonesia)":"id-ID"};
+const SS="speechSynthesis" in window;
+function voices(){const l=(LG[$("#bhs").value]||"id-ID").slice(0,2),v=SS?speechSynthesis.getVoices().filter(x=>x.lang.toLowerCase().startsWith(l)):[];$("#voice").innerHTML=v.length?v.map(x=>`<option>${esc(x.name)}</option>`).join(""):"<option>Suara bawaan perangkat</option>"}
+if(SS)speechSynthesis.onvoiceschanged=voices;$("#bhs").onchange=voices;voices();
+function say(text,b){if(!SS)return alert("Browser ini tidak mendukung suara bawaan.");const was=b._on;speechSynthesis.cancel();if(was){b._on=false;b.textContent="🔊 PUTAR NARASI";return}
+ const u=new SpeechSynthesisUtterance(text);u.lang=LG[$("#bhs").value]||"id-ID";const v=speechSynthesis.getVoices().find(x=>x.name===$("#voice").value);if(v)u.voice=v;
+ b._on=true;b.textContent="⏹ BERHENTI";u.onend=u.onerror=()=>{b._on=false;b.textContent="🔊 PUTAR NARASI"};speechSynthesis.speak(u)}
+/* gambar gratis tanpa key */
+function pimg(prompt,box){const r=(window._j.cfg||{}).ratio,w=r==="16:9"?1024:576,h=r==="16:9"?576:1024,u="https://image.pollinations.ai/prompt/"+encodeURIComponent(prompt.slice(0,800))+`?width=${w}&height=${h}&nologo=true&seed=${Math.floor(Math.random()*1e6)}`;
+ box.innerHTML='<div style="font-size:11px;color:#7a6f85;margin-top:8px">⏳ Membuat gambar... (bisa 10–30 detik)</div>';
+ const im=new Image();im.style.cssText="width:100%;border-radius:14px;margin-top:8px";
+ im.onload=()=>{box.innerHTML="";box.appendChild(im);const a=document.createElement("a");a.href=u;a.target="_blank";a.rel="noopener";a.className="cp";a.style.cssText="float:none;display:inline-block;margin-top:6px;text-decoration:none;color:inherit";a.textContent="⬇ BUKA / UNDUH";box.appendChild(a)};
+ im.onerror=()=>{box.innerHTML='<div class="err">Gambar gagal dimuat. Layanan gambar gratis mungkin sedang sibuk atau berubah. Coba lagi nanti, atau salin prompt ke generator gambar Anda.</div>'};im.src=u}
+$("#res").onclick=e=>{const j=window._j,b=e.target.closest("button");if(!b)return;
+ if(b.dataset.ch){copy(j.characters[b.dataset.ch].refPrompt,b);return}
+ if(b.dataset.img!=null){pimg(j.characters[b.dataset.img].refPrompt,$("#im"+b.dataset.img));return}
+ if(b.dataset.simg!=null){pimg(j.scenes[b.dataset.simg].imagePrompt,$("#sm"+b.dataset.simg));return}
+ if(b.dataset.tts!=null){say(j.scenes[b.dataset.tts].narasi,b);return}
+ if(b.dataset.c){const k=b.dataset.c;copy(k==="cap"?j.caption+"\n"+j.hashtags.join(" "):j.scenes[k.split(".")[0]][k.split(".")[1]],b)}
+ if(b.id==="all")copy(j.title+"\n\n"+j.scenes.map((s,i)=>`ADEGAN ${i+1} (${s.time})\n${s.narasi}\nIMG: ${s.imagePrompt}\nVID: ${s.videoPrompt}`).join("\n\n")+"\n\n"+j.caption+"\n"+j.hashtags.join(" "),b);
  if(b.id==="back")show("home")};
+loadG();gal();
 </script></body></html>
