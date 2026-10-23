@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>KANAK SASAK</title>
+<meta name="theme-color" content="#0b0710"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--o:#ff5a00;--r:#e8174a;--c:#19d3f3;--b:#2f7bff;--ink:#1a1020;--mut:#7a6f85;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html{color-scheme:light}
+body{margin:0;font-family:Poppins,system-ui,sans-serif;background:#0b0710;color:#fff;min-height:100vh}
+.scr{display:none;max-width:480px;margin:0 auto;padding:18px 16px 40px}.scr.on{display:block}
+.hero{text-align:center;padding-top:36px}
+.badge{display:inline-block;font-size:9px;letter-spacing:2px;font-weight:700;padding:6px 14px;border-radius:99px;background:rgba(255,90,0,.25);border:1px solid #ff5a0088}
+h1{font-size:44px;line-height:1;margin:22px 0 14px;font-weight:800;font-style:italic;text-shadow:3px 3px 0 #000}
+h1 .g{background:linear-gradient(90deg,#ffb300,#ff5a00,#ffe14d,#19d3f3,#b04dff);-webkit-background-clip:text;background-clip:text;color:transparent;display:block}
+.hero p{font-size:12px;color:#c9bfd6;line-height:1.6;margin:0 8px 26px}
+.btn{border:0;border-radius:99px;font:800 12px Poppins,sans-serif;letter-spacing:.5px;color:#fff;padding:15px 22px;cursor:pointer;background:linear-gradient(180deg,#ff7a1a,#ff4d00);box-shadow:0 5px 0 #b33400,0 10px 24px #ff5a0066}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #b33400}
+.btn.red{background:linear-gradient(180deg,#ff3a55,#d3103f);box-shadow:0 5px 0 #8a0a29,0 10px 24px #e8174a55}
+.btn.cy{background:linear-gradient(180deg,#25e3ff,#2f7bff);box-shadow:0 4px 0 #1b4fb3;width:100%}
+.btn:disabled{opacity:.5}
+.card{background:#fff;color:var(--ink);border-radius:26px;padding:18px;margin-top:26px;box-shadow:0 14px 40px #0008}
+.card h2{font-size:22px;font-style:italic;margin:0 0 12px;font-weight:800}
+.gi{display:flex;gap:12px;align-items:center;border:1px solid #eee;border-radius:18px;padding:10px;margin-top:10px;cursor:pointer}
+.gi .th{width:54px;height:54px;border-radius:12px;background:linear-gradient(135deg,#ffb300,#ff5a00);display:grid;place-items:center;font-size:24px}
+.gi b{font-size:14px;font-style:italic;display:block}.gi small{font-size:9px;color:var(--mut)}
+.empty{font-size:11px;color:var(--mut);text-align:center;padding:10px}
+.form{background:#fff;color:var(--ink);border-radius:28px;padding:20px 18px;border-left:5px solid var(--o);border-right:5px solid #c32bff}
+.form h2{text-align:center;font-size:24px;font-style:italic;margin:4px 0 2px;font-weight:800}
+.form .sub{text-align:center;font-size:8px;letter-spacing:2px;color:var(--mut);margin-bottom:16px}
+label{display:block;font-size:10px;font-weight:800;color:#a85a00;letter-spacing:.6px;margin:14px 0 6px;text-transform:uppercase}
+select,textarea{width:100%;border:1.5px solid #e6e1ee;background:#f7f5fb;border-radius:14px;padding:13px 12px;font:600 12px Poppins,sans-serif;color:var(--ink)}
+select:focus,textarea:focus{outline:2px solid var(--o);background:#fff}
+textarea{min-height:96px;resize:vertical;font-weight:500}
+.seg{display:flex;gap:8px}.seg button{flex:1;border:0;border-radius:14px;padding:13px 4px;font:800 11px Poppins,sans-serif;background:#f7f5fb;color:#8d8499;cursor:pointer}
+.seg button.on{background:linear-gradient(180deg,#ff7a1a,#ff3a55);color:#fff;box-shadow:0 5px 12px #ff5a004d}
+.seg.cy button.on{background:linear-gradient(180deg,#25e3ff,#19b4f3);color:#04323d}
+.box{border:1.5px solid #e6e1ee;border-radius:22px;padding:14px;margin-top:16px}
+.bh{display:flex;justify-content:space-between;align-items:center;font-size:10px;font-weight:800;letter-spacing:.6px}
+.bh i{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#ff3a8a,#c32bff);margin-right:8px;font-style:normal}
+.bh i.c{background:linear-gradient(135deg,#25e3ff,#2f7bff)}
+.pill{border:1px solid #e6e1ee;background:#fff;border-radius:99px;padding:6px 10px;font:700 8px Poppins;cursor:pointer}
+.foot{display:flex;align-items:center;justify-content:space-between;margin-top:22px}
+.foot .x{background:none;border:0;font:800 10px Poppins;letter-spacing:2px;color:#9a91a6;cursor:pointer}
+.err{color:#d3103f;font-size:11px;font-weight:600;margin-top:10px;text-align:center}
+#load{text-align:center;padding-top:110px}
+.ring{width:150px;height:150px;border-radius:50%;margin:0 auto 34px;background:conic-gradient(#ff5a00,#e8174a,#c32bff,#19d3f3,#ff5a00);display:grid;place-items:center;animation:sp 2.4s linear infinite}
+.ring::after{content:"";width:132px;height:132px;border-radius:50%;background:#0b0710}
+@keyframes sp{to{transform:rotate(360deg)}}
+#load h3{font-size:26px;font-style:italic;margin:0;font-weight:800}
+#load h3 span{background:linear-gradient(90deg,#19d3f3,#c32bff,#ff5a00);-webkit-background-clip:text;background-clip:text;color:transparent}
+#load p{font-size:9px;letter-spacing:1.5px;color:#bdb2cc;margin:14px 20px}
+.bar{height:5px;border-radius:9px;background:#2a2133;margin:20px 30px 6px;overflow:hidden}.bar div{height:100%;width:3%;background:linear-gradient(90deg,#19d3f3,#c32bff,#ff5a00);transition:width .5s}
+.res h2{font-size:24px;font-style:italic;font-weight:800;margin:6px 0 2px}.res .meta{font-size:10px;color:#c9bfd6;margin-bottom:12px}
+.sc{background:#fff;color:var(--ink);border-radius:22px;padding:14px;margin-top:12px}
+.sc .t{display:inline-block;font-size:9px;font-weight:800;background:#ff5a00;color:#fff;border-radius:99px;padding:4px 10px}
+.sc h4{font-size:9px;letter-spacing:1px;color:#a85a00;margin:12px 0 4px}
+.sc p{margin:0;font-size:12px;line-height:1.55}
+.sc .cp{float:right;border:0;background:#f1edf8;border-radius:99px;padding:4px 10px;font:700 9px Poppins;cursor:pointer}
+.sub-b{display:inline-block;background:#7a1fff;color:#fff;font-weight:800;font-size:11px;padding:2px 8px;margin-top:4px}
+.tags{font-size:11px;color:#19d3f3;margin-top:6px}
+.row{display:flex;gap:8px;margin-top:16px}.row .btn{flex:1;padding:13px 8px;font-size:11px}
+.cc{border:1.5px dashed #e6e1ee;border-radius:18px;padding:12px;margin-top:12px}.cc input{width:100%;border:1.5px solid #e6e1ee;background:#f7f5fb;border-radius:12px;padding:11px;font:700 12px Poppins,sans-serif;margin-top:10px;color:var(--ink)}.cc textarea{min-height:76px;margin-top:8px;font-size:11px}.cc .pill{font-size:8px}.rf{background:#f7f5fb;border-radius:12px;padding:8px;margin-top:6px}
+</style></head><body>
+
+<section class="scr on" id="home">
+ <div class="hero">
+  <span class="badge">● CLAY ANIMATION ENGINE V1.0</span>
+  <h1>MAKE IT CLAY.<span class="g">KANAK SASAK</span></h1>
+  <p>ClayVerse AI mengotomatiskan seluruh proses kreatifmu: dari konsep, storyboard, hingga prompt video animasi clay berkualitas tinggi yang siap menggugah media sosial.</p>
+  <button class="btn" id="start">✎ MULAI BUAT KONTEN CLAY!</button>
+ </div>
+ <div class="card"><h2>GALERI CLAYVERSE</h2><div id="gal"></div></div>
+</section>
+
+<section class="scr" id="cfg">
+ <div class="form">
+  <h2>KONFIGURASI CERITA 🎨</h2><div class="sub">DESIGNING YOUR NEXT VIRAL CLAY ANIMATION.</div>
+  <label>🔑 Google AI Studio API Key</label><input id="key" type="password" autocomplete="off" placeholder="Tempel API key (tersimpan di browser ini saja)" style="width:100%;border:1.5px solid #e6e1ee;background:#f7f5fb;border-radius:14px;padding:13px 12px;font:600 12px Poppins,sans-serif">
+  <label>⏱ Durasi Video</label><select id="dur"></select>
+  <label>🎞 Ratio Layar</label>
+  <div class="seg" id="ratio"><button class="on" data-v="9:16">9:16</button><button data-v="16:9">16:9</button></div>
+  <label>🎬 Durasi Tiap Adegan</label>
+  <div class="seg" id="sdur"><button data-v="5">5 DETIK</button><button class="on" data-v="8">8 DETIK</button><button data-v="10">10 DETIK</button></div>
+  <label>🎨 Pilih Tema Clay</label><select id="tema"></select>
+  <div class="box">
+   <div class="bh"><span><i>👥</i>KARAKTER STUDIO</span><button class="pill" id="rnd">🎲 ACAK KARAKTER</button></div>
+   <label>Jumlah Karakter</label>
+   <div class="seg" id="jml"><button class="on" data-v="1">1</button><button data-v="2">2</button><button data-v="3">3</button><button data-v="4">4</button></div>
+   <label>Jenis Karakter</label><select id="jenis"></select>
+   <div id="chars"></div><button class="btn cy" id="autoc" style="margin-top:12px">✨ BUAT SEMUA KARAKTER ✨</button>
+  </div>
+  <label>🎬 Ide Cerita ClayVerse</label>
+  <textarea id="ide" placeholder="Tuliskan alur ceritamu atau biarkan AI membantu..."></textarea>
+  <button class="btn cy" id="auto" style="margin-top:12px">✨ GENERATE CERITA OTOMATIS ✨</button>
+  <div class="box">
+   <div class="bh"><span><i class="c">🎧</i>AUDIO &amp; SUBTITLE STUDIO</span></div>
+   <label>Mode Audio</label>
+   <div class="seg cy" id="mode"><button class="on" data-v="Narasi">NARASI</button><button data-v="Dialog">DIALOG</button></div>
+   <label>Subtitle</label>
+   <div class="seg cy" id="sub"><button data-v="Tanpa Teks">TANPA TEKS</button><button class="on" data-v="Subtitle Dinamis">SUBTITLE DINAMIS</button></div>
+   <label>Bahasa Video</label><select id="bhs"></select>
+   <label>Gaya Bahasa</label><select id="gaya"></select>
+   <label>Suara Narator</label><select id="voice"><option>Kore</option><option>Puck</option><option>Charon</option><option>Zephyr</option><option>Leda</option><option>Fenrir</option><option>Aoede</option><option>Orus</option></select>
+  </div>
+  <div class="err" id="err"></div>
+  <div class="foot"><button class="x" id="batal">BATAL</button><button class="btn red" id="go">CREATE CLAYVERSE PLAN ✏️</button></div>
+ </div>
+</section>
+
+<section class="scr" id="load">
+ <div class="ring"></div>
+ <h3>Studio Engine<br><span>SEDANG BERPIKIR</span></h3>
+ <p>MENGANALISIS OBJEK, MERANCANG TRANSISI AESTHETIC, DAN MENYUSUN BLUEPRINT VIDEO VIRAL.</p>
+ <div class="bar"><div id="pg"></div></div>
+ <p id="pt">● PROCESSING DATA... 0%</p>
+</section>
+
+<section class="scr res" id="res"></section>
+
+<script>
+const $=s=>document.querySelector(s);
+const O={
+ dur:[10,20,30,40,50,60,70,80,90,100,110,120,130].map(n=>[n,n+" Detik"]),
+ tema:["😂 Komedi","👻 Horor","🐾 Dunia Hewan","📚 Edukasi","🧚 Fantasi","🧭 Petualangan","🤝 Persahabatan","🥹 Emosional / Mengharukan","🕵️ Misteri","💰 Heist / Pencurian"],
+ jenis:["👨 Manusia Dewasa","🧒 Anak-anak","👵 Lansia","🐶 Hewan Peliharaan","🦁 Hewan Liar","🐮 Hewan Ternak","🐉 Makhluk Fantasi","🤖 Robot","👽 Alien","👾 Monster Lucu","🦸 Superhero","🧙 Penyihir","🏴‍☠️ Bajak Laut","👨‍🚀 Astronaut","💼 Profesi Spesifik","🧑‍🤝‍🧑 Kombinasi Manusia + Hewan"],
+ bhs:["Bahasa Indonesia","Bahasa Inggris","Mandarin (China)","Japanese (Jepang)","Korean (Korea)","Bahasa Melayu (Malaysia)","Arabic (Arab)","Hindi (India)","Bahasa Jawa (Indonesia)","Bahasa Sunda (Indonesia)"],
+ gaya:["Santai — ringan, natural, seperti ngobrol sehari-hari.","Storytelling — mengalir seperti sedang menceritakan sebuah kisah.","Dramatis — emosional, tegang, dan membangun rasa penasaran.","Inspiratif — membangkitkan semangat dan motivasi.","Persuasif — meyakinkan dan mendorong audiens untuk bertindak.","Edukatif — informatif, jelas, dan mudah dipahami.","Provokatif — memancing rasa penasaran, reaksi, dan diskusi.","Emosional — menyentuh perasaan dan membangun koneksi."]
+};
+function fill(id,a){$(id).innerHTML=a.map(x=>Array.isArray(x)?`<option value="${x[1]}">${x[1]}</option>`:`<option>${x}</option>`).join("")}
+fill("#dur",O.dur);fill("#tema",O.tema);fill("#jenis",O.jenis);fill("#bhs",O.bhs);fill("#gaya",O.gaya);
+$("#dur").value="30 Detik";
+document.querySelectorAll(".seg").forEach(s=>s.onclick=e=>{const b=e.target.closest("button");if(!b)return;s.querySelectorAll("button").forEach(x=>x.classList.remove("on"));b.classList.add("on")});
+const val=id=>$(id+" .on").dataset.v;
+function show(id){document.querySelectorAll(".scr").forEach(s=>s.classList.toggle("on",s.id===id));scrollTo(0,0)}
+let mem=[];
+function loadG(){try{mem=JSON.parse(localStorage.getItem("clayverse")||"[]")}catch(e){}}
+function saveG(){try{localStorage.setItem("clayverse",JSON.stringify(mem))}catch(e){}}
+function gal(){$("#gal").innerHTML=mem.length?mem.map((m,i)=>`<div class="gi" data-i="${i}"><div class="th">🎨</div><div><b>${esc(m.title)}</b><small>${m.date} • ${m.scenes.length} ADEGAN</small></div></div>`).join(""):'<div class="empty">Belum ada karya. Mulai buat konten clay pertamamu!</div>'}
+function esc(s){return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+$("#gal").onclick=e=>{const g=e.target.closest(".gi");if(g)render(mem[g.dataset.i])};
+$("#start").onclick=()=>show("cfg");$("#batal").onclick=()=>show("home");
+$("#rnd").onclick=()=>{$("#jenis").selectedIndex=Math.floor(Math.random()*O.jenis.length);$("#tema").selectedIndex=Math.floor(Math.random()*O.tema.length)};
+let CH=[];const nChar=()=>parseInt(val("#jml"));
+function drawChars(){const n=nChar();while(CH.length<4)CH.push({name:"",look:""});
+ $("#chars").innerHTML=CH.slice(0,n).map((x,i)=>`<div class="cc"><div class="bh"><span>KARAKTER ${i+1}</span><button class="pill" data-a="${i}">✨ BUAT OTOMATIS</button></div><input data-n="${i}" placeholder="Nama karakter (mis. Arto)" value="${esc(x.name)}"><textarea data-l="${i}" placeholder="Ciri fisik tetap: wajah, rambut, baju, warna, aksesori... (dipakai persis di semua adegan)">${esc(x.look)}</textarea></div>`).join("")}
+$("#chars").oninput=e=>{const t=e.target;if(t.dataset.n!=null)CH[t.dataset.n].name=t.value;if(t.dataset.l!=null)CH[t.dataset.l].look=t.value};
+$("#chars").onclick=e=>{const b=e.target.closest("button[data-a]");if(b)autoChar(+b.dataset.a,b)};
+$("#jml").addEventListener("click",drawChars);
+$("#autoc").onclick=async e=>{const b=e.target;b.disabled=true;for(let i=0;i<nChar();i++)await autoChar(i);b.disabled=false};
+async function autoChar(i,btn){if(!sample)return noAI();const c=cfg(),o=CH.slice(0,nChar()).map((x,k)=>k!==i?x.name:"").filter(Boolean);
+ if(btn){btn.disabled=true;btn.textContent="⏳"}
+ try{const r=await sample.json(`Buat 1 karakter animasi clay (plastisin) untuk video bertema ${c.tema}. Jenis: ${c.jenis}. ${c.ide?"Ide cerita: "+c.ide+". ":""}${CH[i].name?"Nama harus: "+CH[i].name+". ":""}Karakter lain (jangan mirip): ${o.join(", ")||"-"}. Balas HANYA JSON: {"name":"nama pendek","look":"English visual description 35-50 words: face, eyes, hair, clay color, outfit, accessories, body proportion, signature clay texture"}`,{cache:false});
+  CH[i].name=r.name||CH[i].name;CH[i].look=r.look||"";drawChars()}
+ catch(e){$("#err").textContent="Gagal: "+(e.message||e.code||"coba lagi");if(btn){btn.disabled=false;btn.textContent="✨ BUAT OTOMATIS"}}}
+drawChars();
+let sample=null;
+const K=()=>{try{return localStorage.getItem("gkey")||""}catch(e){return ""}};
+$("#key").value=K();$("#key").oninput=()=>{try{localStorage.setItem("gkey",$("#key").value.trim())}catch(e){}};
+const G="https://generativelanguage.googleapis.com/v1beta/models/";
+async function gcall(models,body){const k=K();if(!k)throw new Error("Isi API key Google AI Studio dulu (di halaman Konfigurasi).");
+ let last;for(const m of [].concat(models)){let r;
+  try{r=await fetch(G+m+":generateContent",{method:"POST",headers:{"Content-Type":"application/json","x-goog-api-key":k},body:JSON.stringify(body)})}catch(e){throw new Error("Tidak bisa terhubung ke Google. Buka file ini langsung di browser/hosting sendiri, bukan di halaman yang memblokir jaringan.")}
+  const d=await r.json();if(r.ok)return d;last=new Error((d.error&&d.error.message)||"HTTP "+r.status);
+  if(r.status!==404&&!/no longer available|not found|not supported/i.test(last.message))throw last}
+ throw last}
+const parts=d=>((d.candidates&&d.candidates[0]&&d.candidates[0].content&&d.candidates[0].content.parts)||[]);
+async function gem(p,js){const d=await gcall(["gemini-3.8-flash","gemini-3.6-flash"],{contents:[{parts:[{text:p}]}],generationConfig:js?{responseMimeType:"application/json"}:{}});return parts(d).map(x=>x.text||"").join("")}
+sample=Object.assign(async p=>({text:await gem(p)}),{json:async p=>JSON.parse((await gem(p,true)).replace(/```json|```/g,"").trim())});
+async function genImg(prompt){const d=await gcall(["gemini-3.1-flash-image","gemini-2.5-flash-image"],{contents:[{parts:[{text:prompt}]}],generationConfig:{responseModalities:["IMAGE"]}});
+ const x=parts(d).find(x=>x.inlineData||x.inline_data);if(!x)throw new Error("Model tidak mengembalikan gambar. Coba ubah prompt.");const m=x.inlineData||x.inline_data;return "data:"+(m.mimeType||m.mime_type||"image/png")+";base64,"+m.data}
+function wav(b64){const bin=atob(b64),n=bin.length,u=new Uint8Array(44+n),v=new DataView(u.buffer),w=(o,t)=>[...t].forEach((c,i)=>v.setUint8(o+i,c.charCodeAt(0)));
+ w(0,"RIFF");v.setUint32(4,36+n,true);w(8,"WAVEfmt ");v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,24000,true);v.setUint32(28,48000,true);v.setUint16(32,2,true);v.setUint16(34,16,true);w(36,"data");v.setUint32(40,n,true);
+ for(let i=0;i<n;i++)u[44+i]=bin.charCodeAt(i);return URL.createObjectURL(new Blob([u],{type:"audio/wav"}))}
+async function genTTS(text){const d=await gcall(["gemini-3.8-flash-tts","gemini-3.1-flash-tts-preview"],{contents:[{parts:[{text}]}],generationConfig:{responseModalities:["AUDIO"],speechConfig:{voiceConfig:{prebuiltVoiceConfig:{voiceName:$("#voice").value}}}}});
+ const x=parts(d).find(x=>x.inlineData||x.inline_data);if(!x)throw new Error("Model tidak mengembalikan audio.");return wav((x.inlineData||x.inline_data).data)}
+const dl='class="cp" style="float:none;display:inline-block;margin-top:6px;text-decoration:none;color:inherit"';
+async function mkImg(i,b){const x=window._j.characters[i],o=b.textContent,box=$("#im"+i);b.disabled=true;b.textContent="⏳ MEMBUAT...";
+ try{const u=await genImg((x.refPrompt||("Clay stop-motion character reference sheet, front, side and back views, plain gray background."))+" Character: "+x.look);
+  box.innerHTML=`<img src="${u}" style="width:100%;border-radius:14px;margin-top:8px"><a ${dl} href="${u}" download="${esc(x.name||"karakter")}.png">⬇ UNDUH</a>`;b.textContent="🔁 BUAT ULANG"}
+ catch(e){box.innerHTML=`<div class="err">${esc(e.message)}</div>`;b.textContent=o}b.disabled=false}
+async function mkTts(i,b){const s=window._j.scenes[i],o=b.textContent,box=$("#au"+i);b.disabled=true;b.textContent="⏳ MEMBUAT...";
+ try{const u=await genTTS(s.narasi);box.innerHTML=`<audio controls src="${u}" style="width:100%;margin-top:8px"></audio><a ${dl} href="${u}" download="adegan-${i+1}.wav">⬇ UNDUH</a>`;b.textContent="🔁 BUAT ULANG"}
+ catch(e){box.innerHTML=`<div class="err">${esc(e.message)}</div>`;b.textContent=o}b.disabled=false}
+loadG();gal();
+const cfg=()=>({durasi:$("#dur").value,ratio:val("#ratio"),tema:$("#tema").value,jumlah:val("#jml"),jenis:$("#jenis").value,ide:$("#ide").value.trim(),audio:val("#mode"),subtitle:val("#sub"),bahasa:$("#bhs").value,gaya:$("#gaya").value,sd:parseInt(val("#sdur")),chars:CH.slice(0,nChar()).map(x=>({name:x.name.trim(),look:x.look.trim()}))});
+function noAI(){$("#err").textContent="Fitur AI belum tersedia di tampilan ini. Buka halaman lewat claude.ai dan izinkan akses.";}
+$("#auto").onclick=async()=>{
+ if(!sample)return noAI();$("#err").textContent="";const c=cfg(),b=$("#auto");b.disabled=true;b.textContent="⏳ MENULIS CERITA...";
+ try{const r=await sample(`Buat satu ide cerita pendek untuk video animasi clay (plastisin) ${c.durasi}, tema ${c.tema}, ${c.jumlah} karakter bertipe ${c.jenis}. Bahasa: ${c.bahasa}. Format: judul tebal, lalu rincian per detik (Hook 0-5 detik, isi, ending). Maksimal 150 kata. Tanpa pembuka/penutup.${c.ide?" Kembangkan dari ide ini: "+c.ide:""}`);$("#ide").value=r.text.trim()}
+ catch(e){$("#err").textContent="Gagal membuat cerita: "+(e.message||e.code||"coba lagi")}
+ b.disabled=false;b.textContent="✨ GENERATE CERITA OTOMATIS ✨"};
+let tm;function prog(){let p=3;$("#pg").style.width="3%";clearInterval(tm);tm=setInterval(()=>{p=Math.min(95,p+Math.random()*7);$("#pg").style.width=p+"%";$("#pt").textContent="● PROCESSING DATA... "+Math.round(p)+"%"},700)}
+$("#go").onclick=async()=>{
+ if(!sample)return noAI();const c=cfg();$("#err").textContent="";
+ if(Math.ceil(parseInt(c.durasi)/c.sd)>20)return $("#err").textContent="Terlalu banyak adegan (maks 20). Pilih durasi adegan lebih panjang atau kurangi durasi video.";
+ show("load");prog();
+ const T=parseInt(c.durasi),n=Math.ceil(T/c.sd),mm=x=>String(Math.floor(x/60)).padStart(2,"0")+":"+String(x%60).padStart(2,"0");
+ const ts=Array.from({length:n},(_,i)=>mm(i*c.sd)+"-"+mm(Math.min(T,(i+1)*c.sd)));
+ const cb=c.chars.some(x=>x.name||x.look)?"KARAKTER TETAP (wajib dipakai persis, jangan diubah): "+c.chars.map((x,i)=>`${i+1}. ${x.name||"(beri nama)"} — ${x.look||"(buat ciri fisik detail)"}`).join(" | "):"";
+ const p=`Kamu adalah sutradara animasi clay (stop-motion plastisin) viral. Buat blueprint video.
+Durasi ${c.durasi}, rasio ${c.ratio}, tema ${c.tema}, ${c.jumlah} karakter (${c.jenis}), mode audio ${c.audio}, subtitle: ${c.subtitle}, bahasa video: ${c.bahasa}, gaya bahasa: ${c.gaya}.
+Ide cerita: ${c.ide||"(buat sendiri yang kreatif dan viral)"}
+Buat tepat ${n} adegan berurutan, masing-masing ${c.sd} detik, dengan rentang waktu persis: ${ts.join(", ")}. ${cb} Konsistensi karakter WAJIB: di setiap imagePrompt dan videoPrompt tulis ulang ciri fisik lengkap karakter yang muncul (identik di semua adegan, dalam bahasa Inggris: wajah, warna, pakaian, tekstur clay), jangan diringkas. Isi refPrompt tiap karakter dengan prompt English untuk character reference sheet clay (tampak depan, samping, belakang, latar polos abu-abu). Tiap videoPrompt harus menyebut durasi ${c.sd} seconds. Gaya visual: handmade clay, fingerprint texture, warna cerah, sinematik.
+Balas HANYA JSON valid: {"title":"","characters":[{"name":"","look":"","refPrompt":""}],"scenes":[{"time":"00:00-00:08","visual":"deskripsi adegan (Indonesia)","narasi":"teks ${c.audio==="Dialog"?"dialog tiap karakter 'Nama: ucapan'":"narasi"} dalam ${c.bahasa}","subtitle":"1-3 kata kunci huruf besar","imagePrompt":"English prompt for clay-style still image, ${c.ratio}","videoPrompt":"English prompt for ${c.ratio} clay stop-motion video with camera movement"}],"caption":"","hashtags":["#..."]}`;
+ try{
+  const j=await sample.json(p,{modelTier:"complex",cache:false});
+  clearInterval(tm);$("#pg").style.width="100%";
+  j.characters=(j.characters||[]).map((x,i)=>({...x,name:(c.chars[i]&&c.chars[i].name)||x.name,look:(c.chars[i]&&c.chars[i].look)||x.look}));j.scenes.forEach((s,i)=>{if(ts[i])s.time=ts[i]});j.cfg=c;j.date=new Date().toLocaleDateString("id-ID");mem.unshift(j);mem=mem.slice(0,20);saveG();gal();render(j);
+ }catch(e){clearInterval(tm);show("cfg");$("#err").textContent="Gagal membuat plan: "+(e.message||e.code||"coba lagi")}
+};
+function render(j){
+ window._j=j;const c=j.cfg||{};
+ $("#res").innerHTML=`<h2>${esc(j.title)}</h2><div class="meta">${esc(c.durasi)} • ${c.sd||8} dtk/adegan • ${esc(c.ratio)} • ${esc(c.tema)} • ${esc(c.bahasa)}</div>
+ ${(j.characters||[]).map((x,ci)=>`<div class="sc"><span class="t">KARAKTER</span> <b style="font-size:13px">${esc(x.name)}</b><p>${esc(x.look)}</p>${x.refPrompt?`<h4>PROMPT FOTO REFERENSI <button class="cp" data-ch="${ci}">SALIN</button></h4><p class="rf">${esc(x.refPrompt)}</p>`:""}<button class="cp" style="float:none;margin-top:8px" data-img="${ci}">🖼 BUAT GAMBAR REFERENSI</button><div id="im${ci}"></div></div>`).join("")}
+ ${j.scenes.map((s,i)=>`<div class="sc"><span class="t">ADEGAN ${i+1} • ${esc(s.time)}</span>
+ <h4>VISUAL</h4><p>${esc(s.visual)}</p><h4>TEKS NARASI STUDIO</h4><p>${esc(s.narasi)}</p><button class="cp" style="float:none;margin-top:8px" data-tts="${i}">🔊 BUAT AUDIO NARASI</button><div id="au${i}"></div>${s.subtitle?`<span class="sub-b">${esc(s.subtitle)}</span>`:""}
+ <h4>PROMPT GAMBAR <button class="cp" data-c="${i}.imagePrompt">SALIN</button></h4><p>${esc(s.imagePrompt)}</p>
+ <h4>PROMPT VIDEO <button class="cp" data-c="${i}.videoPrompt">SALIN</button></h4><p>${esc(s.videoPrompt)}</p></div>`).join("")}
+ <div class="sc"><h4 style="margin-top:0">CAPTION <button class="cp" data-c="cap">SALIN</button></h4><p>${esc(j.caption)}</p><div class="tags" style="color:#7a1fff">${esc((j.hashtags||[]).join(" "))}</div></div>
+ <div class="row"><button class="btn" id="all">SALIN SEMUA</button><button class="btn red" id="back">BUAT BARU</button></div>`;
+ show("res");
+}
+async function copy(t,b){try{await navigator.clipboard.writeText(t)}catch(e){const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();try{document.execCommand("copy")}catch(_){}a.remove()}
+ if(b){const o=b.textContent;b.textContent="✓ TERSALIN";setTimeout(()=>b.textContent=o,1200)}}
+$("#res").onclick=e=>{const j=window._j;const b=e.target.closest("button");if(!b)return;
+ if(b.dataset.ch){copy(j.characters[b.dataset.ch].refPrompt||"",b);return}
+ if(b.dataset.img!=null){mkImg(+b.dataset.img,b);return}
+ if(b.dataset.tts!=null){mkTts(+b.dataset.tts,b);return}
+ if(b.dataset.c){const k=b.dataset.c;copy(k==="cap"?j.caption+"\n"+(j.hashtags||[]).join(" "):j.scenes[k.split(".")[0]][k.split(".")[1]],b)}
+ if(b.id==="all")copy(j.title+"\n\n"+j.scenes.map((s,i)=>`ADEGAN ${i+1} (${s.time})\n${s.visual}\n${s.narasi}\nIMG: ${s.imagePrompt}\nVID: ${s.videoPrompt}`).join("\n\n")+"\n\n"+j.caption+"\n"+(j.hashtags||[]).join(" "),b);
+ if(b.id==="back")show("home")};
+</script></body></html>
